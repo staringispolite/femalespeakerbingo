@@ -1,0 +1,223 @@
+<html>
+<head>
+<title>Female Conference Speaker Bingo</title>
+<style type="text/css">
+  html {
+    background-color: #EEEEEE;
+    width: 100%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #262626;
+    font-family: Georgia, serif;
+  }
+
+  h1 {
+    font-size: 55px;
+    font-family: 'helvetica nueue', 'arial', sans-serif;
+    margin: 10px 0;
+    color: #191919;
+    letter-spacing: 5px;
+  }
+
+  h4 {
+    font-size: 20px;
+    font-family: 'helvetica nueue', 'arial', sans-serif;
+    font-weight: normal;
+    letter-spacing: 1.1px;
+    margin: 0 0 20px 0; 
+    color: #AAAAAA; 
+  }
+
+  table {
+    width: 700px;
+    height: 600px;
+    margin: auto;
+    background-color: #FFFFFF;
+    padding: 0px;
+    font-size: 16px;
+  }
+
+  td {
+    border: 1px solid #AAAAAA;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+  }
+
+  td.selected {
+    background-color: #ffd1dc;
+    font-weight: bold;
+  }
+
+  #square2-2 {
+    font-weight: bold;
+  }
+
+  .footer {
+    margin: 20px auto 30px auto;
+    font-family: 'helvetica nueue', 'arial', sans-serif;
+    font-size: 16px;
+    width: 700px;
+    color: #AAAAAA;
+  }
+
+  .footer a {
+    color: #009999;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto 10px;
+  }
+
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+  var NUM_SQUARES_PER_SIDE = 5;
+  var CENTER_SQUARE = 
+    "FREE";
+  var squares = [
+    "Women just aren't interested in this field",
+    "There aren't enough qualified female speakers",
+    "We need big-name speakers; few of those are women",
+    "It's a male-dominated field",
+    "There aren't a lot of women in C-level positions",
+    "Both women we called were booked that weekend",
+    "Both women we booked bailed last minute",
+    "All the women were probably busy",
+    "Female speakers are burnt out from speaking so much",
+    "Trying to get more female speakers is sexist",
+    "The organizers just wanted the best speakers they could find",
+    "You can't kick out a male speaker just to fit a woman in there",
+    "You can't shoehorn in a woman where she doesn't fit",
+    "Women never volunteer to present",
+    "You have to be bold; people don't just invite you to present",
+    "Women are shy",
+    "Women only ever want to talk about woman-stuff",
+    "Women need to act more like men",
+    "No one has complained about this before",
+    "Attendees want to hear from people like themselves",
+    "There aren't that many female attendees either",
+    "We're only responding to demand",
+    "Fine, YOU tell me who they should've invited",
+    "We match the industry gender ratio",
+    "Who? I've never heard of her"
+  ];
+</script>
+</head>
+<body>
+  <h1>#FemaleSpeakerBINGO</h1>
+  <table cellpadding="0" cellspacing="0">
+    <tr>
+      <td id="square0-0"></td>
+      <td id="square0-1"></td>
+      <td id="square0-2"></td>
+      <td id="square0-3"></td>
+      <td id="square0-4"></td>
+    </tr>
+    <tr>
+      <td id="square1-0"></td>
+      <td id="square1-1"></td>
+      <td id="square1-2"></td>
+      <td id="square1-3"></td>
+      <td id="square1-4"></td>
+    </tr>
+    <tr>
+      <td id="square2-0"></td>
+      <td id="square2-1"></td>
+      <td id="square2-2"></td>
+      <td id="square2-3"></td>
+      <td id="square2-4"></td>
+    </tr>
+    <tr>
+      <td id="square3-0"></td>
+      <td id="square3-1"></td>
+      <td id="square3-2"></td>
+      <td id="square3-3"></td>
+      <td id="square3-4"></td>
+    </tr>
+    <tr>
+      <td id="square4-0"></td>
+      <td id="square4-1"></td>
+      <td id="square4-2"></td>
+      <td id="square4-3"></td>
+      <td id="square4-4"></td>
+    </tr>
+  </table>
+  <div class="footer">
+    <button id="shuffle">New Card</button>
+    Click a square's text (or print) to play. 
+    By <a href="https://twitter.com/staringispolite">Jonathan Howard</a> &amp; friends.
+    <br/>
+    Contribute on <a href="https://github.com/staringispolite/femalespeakerbingo">Github</a>! Inspired by <a href="https://twitter.com/AcademicsSay/status/436696388621963264">this tweet</a>
+  </div>
+
+  <script type="text/javascript">
+    // "Shuffle" the deck.
+    function shuffleSquares(){
+      var num_shuffles = 100;
+      for (var i = 0; i < num_shuffles; i++) {
+        var slot1 = Math.floor((Math.random() * squares.length));
+        var slot2 = Math.floor((Math.random() * squares.length));
+        var temp = squares[slot1];
+        squares[slot1] = squares[slot2];
+        squares[slot2] = temp;
+      } 
+    }
+
+    // Add 25 squares to screen.
+    function addSquares(){
+      shuffleSquares();
+      for (var i = 0; i < NUM_SQUARES_PER_SIDE; i++) {
+        for (var j = 0; j < NUM_SQUARES_PER_SIDE; j++) {
+          // Set up visuals.
+          var sqId = '#square' + i + '-' + j;
+          var sq = $(sqId);
+
+          // Empty squares
+          sq.empty();
+          sq.removeClass('selected');
+
+          if (i == 2 && j == 2) {
+            sq.html(CENTER_SQUARE);
+          } else {
+            sq.html(squares[i*NUM_SQUARES_PER_SIDE + j]);
+          }
+        }
+      } 
+    }
+
+    addSquares();
+
+    // Set up click events.
+    $('td').click(function(event) {
+      var targetId = event.currentTarget.id;
+      $('#' + targetId).toggleClass('selected');
+    });
+
+    $('#shuffle').click(function(event){
+      addSquares();
+    });
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-51090877-1', 'staringispolite.github.io');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
